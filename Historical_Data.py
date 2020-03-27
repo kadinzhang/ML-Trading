@@ -70,7 +70,7 @@ def pull_historical_data(ticker_symbol):
     #     outfile.write(e.content)
     #     outfile.close()
     except:
-        print("Error Fetching stock, probably doesn't exist anymore")
+        print("Error Fetching stock, may not exist")
 
 
 if __name__ == "__main__":

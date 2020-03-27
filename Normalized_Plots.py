@@ -30,21 +30,26 @@ def get_data(symbols, dates):
         symbols.insert(0, "SPY")
 
     for symbol in symbols:
-        df_temp = pd.read_csv(
-            symbol_to_path(symbol),
-            index_col="Date",
-            parse_dates=True,
-            usecols=["Date", "Adj Close"],
-            na_values=["nan"],
-        )
-        company_name = get_symbol(symbol)
+        try:
+            df_temp = pd.read_csv(
+                symbol_to_path(symbol),
+                index_col="Date",
+                parse_dates=True,
+                usecols=["Date", "Adj Close"],
+                na_values=["nan"],
+            )
+            company_name = get_symbol(symbol)
 
-        df_temp = df_temp.rename(columns={"Adj Close": company_name})
+            df_temp = df_temp.rename(columns={"Adj Close": company_name})
 
-        df = df.join(df_temp)
+            df = df.join(df_temp)
 
-        if company_name == "SPDR S&P 500 ETF Trust":
-            df = df.dropna(subset=["SPDR S&P 500 ETF Trust"])
+            if company_name == "SPDR S&P 500 ETF Trust":
+                df = df.dropna(subset=["SPDR S&P 500 ETF Trust"])
+        except Exception as e:
+            print("Error reading in {symbol} data, may not exist")
+            print(e) 
+            
 
     return df
 
@@ -54,7 +59,7 @@ def test_run():
     dates = pd.date_range("2019-11-01", "2020-03-26")
 
     # Choose stock symbols to read
-    symbols = ["ZM",  "TSLA", "COST", "SPY", "UAL"]
+    symbols = ["ZM",  "TSLA", "COST", "SPY", "UAL", "ZZXZ"]
     # Get stock data
     df = get_data(symbols, dates)
 
