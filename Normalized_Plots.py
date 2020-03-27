@@ -54,14 +54,13 @@ def test_run():
     dates = pd.date_range("2019-11-01", "2020-03-26")
 
     # Choose stock symbols to read
-    symbols = ["SPY", "TSLA", "ZM", "COST", "UAL"]
-
+    symbols = ["ZM",  "TSLA", "COST", "SPY", "UAL"]
     # Get stock data
     df = get_data(symbols, dates)
 
-    plot_data(df)
+    # plot_data(df)
 
-    # plot_data(normalize_data(df))
+    plot_data(normalize_data(df))
 
 
 def normalize_data(df):
@@ -69,7 +68,7 @@ def normalize_data(df):
     return df
 
 
-def plot_data(df, title="Stock Prices"):
+def plot_data(df, title="Normalized Stock Prices"):
     ax = df.plot(title=title, fontsize=10)
     ax.set_xlabel("Date")
     ax.set_ylabel("Adjusted Close Price (USD)")
