@@ -16,8 +16,20 @@ def pull_all_data():
             print("\n")
         
             pull_historical_data(company)
-            shutil.move(make_filename(company), "current_data")
+            try:
+                shutil.move(make_filename(company), "current_data")
+            except:
+                print("Error moving file")
             
+def pull_specific_stocks():
+    stocks = ["ZM", "TSLA", "PG"]
+    for stock in stocks:
+        pull_historical_data(stock)
+        try:
+            shutil.move(make_filename(stock), "current_data")
+        except Exception as e:
+            print("Error moving file")
+            print(e)
 
 
 current_time = str(math.floor(time.time()))
@@ -50,4 +62,5 @@ def pull_historical_data(ticker_symbol, directory="S&P"):
 
 
 if __name__ == "__main__":
-    pull_all_data()
+    # pull_all_data()
+    pull_specific_stocks()

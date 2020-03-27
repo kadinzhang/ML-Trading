@@ -35,14 +35,14 @@ def get_data(symbols, dates):
 
 def test_run():
     # Define a date range
-    dates = pd.date_range('2019-01-01', '2020-03-26')
+    dates = pd.date_range('2019-05-01', '2020-03-26')
 
     # Choose stock symbols to read
-    symbols = ['SPY', 'GOOG', 'AAPL', 'IBM']
+    symbols = ['SPY', 'TSLA', 'ZM', 'PG']
     
     # Get stock data
     df = get_data(symbols, dates)
-
+    # plot_data(df)
     plot_data(normalize_data(df))
 
 def normalize_data(df):
