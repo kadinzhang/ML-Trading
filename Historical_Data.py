@@ -25,8 +25,9 @@ def pull_all_data():
                 print("Error moving file")
 
 
-def pull_specific_stocks():
-    stocks = ["ZM", "TSLA", "PG", "SPY"]
+def pull_specific_stocks(stocks):
+    """Download data of specific stocks from yahoo finance"""
+    print("Downloading historical data for: " + stocks[0])
     for stock in stocks:
         pull_historical_data(stock)
         try:
@@ -74,4 +75,5 @@ def pull_historical_data(ticker_symbol):
 
 if __name__ == "__main__":
     # pull_all_data()
-    pull_specific_stocks()
+    stocks = ["ZM", "TSLA", "PG", "SPY"]
+    pull_specific_stocks(stocks)
