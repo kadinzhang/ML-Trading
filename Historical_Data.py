@@ -8,7 +8,8 @@ import shutil
 # period1 and period2 are Unix time stamps for your start and end date
 # interval is the data retrieval interval (this can be either 1d, 1w or 1m)
 
-def pull_all_data(): 
+
+def pull_all_data():
     with open("old_data/Lists/sp5002012.txt", "r") as file:
         for line in file:
             company = line.strip()
@@ -16,20 +17,23 @@ def pull_all_data():
             print("\n")
             pull_historical_data(company)
             try:
-                filename = make_filename((company), "data")
+                filename = make_filename((company))
                 src = "C:/Users/sebal/Desktop/Coding/Python/ML-Trading"
-                dst = "C:/Users/sebal/Desktop/Coding/Python/ML-Trading/data/S&P"
+                dst = "C:/Users/sebal/Desktop/Coding/Python/ML-Trading/data"
                 shutil.move(os.path.join(src, filename), os.path.join(dst, filename))
-                # shutil.move(make_filename(company), "current_data")
             except:
                 print("Error moving file")
-            
+
+
 def pull_specific_stocks():
-    stocks = ["ZM", "TSLA", "PG"]
+    stocks = ["ZM", "TSLA", "PG", "SPY"]
     for stock in stocks:
         pull_historical_data(stock)
         try:
-            shutil.move(make_filename(stock), "current_data")
+            filename = make_filename((stock))
+            src = "C:/Users/sebal/Desktop/Coding/Python/ML-Trading"
+            dst = "C:/Users/sebal/Desktop/Coding/Python/ML-Trading/data"
+            shutil.move(os.path.join(src, filename), os.path.join(dst, filename))
         except Exception as e:
             print("Error moving file")
             print(e)
@@ -37,9 +41,10 @@ def pull_specific_stocks():
 
 current_time = str(math.floor(time.time()))
 
-# Times: 
+# Times:
 # 2019-01-01 : 1546300800
 # 2000-01-01 : 946684800
+
 
 def make_url(
     ticker_symbol, period1="1546300800", period2=current_time, interval="1d",
@@ -50,14 +55,14 @@ def make_url(
     )
 
 
-def make_filename(ticker_symbol, directory="S&P"):
+def make_filename(ticker_symbol):
     return ticker_symbol + ".csv"
 
 
-def pull_historical_data(ticker_symbol, directory="S&P"):
+def pull_historical_data(ticker_symbol):
     try:
         urllib.request.urlretrieve(
-            make_url(ticker_symbol), make_filename(ticker_symbol, directory)
+            make_url(ticker_symbol), make_filename(ticker_symbol)
         )
     # except urllib.request.ContentTooShortError as e:
     #     outfile = open(make_filename(ticker_symbol, directory), "w")
@@ -68,5 +73,5 @@ def pull_historical_data(ticker_symbol, directory="S&P"):
 
 
 if __name__ == "__main__":
-    pull_all_data()
-    # pull_specific_stocks()
+    # pull_all_data()
+    pull_specific_stocks()
