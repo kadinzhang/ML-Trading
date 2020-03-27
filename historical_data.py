@@ -34,7 +34,7 @@ def pull_specific_stocks(stocks):
 
         try:
             filename = make_filename((stock))
-            src = os.os.path.abspath(os.curdir)
+            src = os.getcwd()
             dst = src + "/data"
             shutil.move(os.path.join(src, filename), os.path.join(dst, filename))
         except Exception as e:
@@ -44,6 +44,9 @@ def pull_specific_stocks(stocks):
 
 current_time = str(math.floor(time.time()))
 
+# Times:
+# 2019-01-01 : 1546300800
+# 2000-01-01 : 946684800
 
 
 def make_url(
@@ -64,7 +67,10 @@ def pull_historical_data(ticker_symbol):
         urllib.request.urlretrieve(
             make_url(ticker_symbol), make_filename(ticker_symbol)
         )
-
+    # except urllib.request.ContentTooShortError as e:
+    #     outfile = open(make_filename(ticker_symbol, directory), "w")
+    #     outfile.write(e.content)
+    #     outfile.close()
     except:
         print("Error Fetching stock, may not exist")
 
