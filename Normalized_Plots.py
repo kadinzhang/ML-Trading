@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def symbol_to_path(symbol, base_dir="data"):
+def symbol_to_path(symbol, base_dir="current_data"):
     """Return CSV file path given ticker symbol."""
     return os.path.join(base_dir, "{}.csv".format(str(symbol)))
 
@@ -35,10 +35,10 @@ def get_data(symbols, dates):
 
 def test_run():
     # Define a date range
-    dates = pd.date_range('2011-01-01', '2012-08-29')
+    dates = pd.date_range('2019-01-01', '2020-03-26')
 
     # Choose stock symbols to read
-    symbols = ['SPY', 'CMG', 'IBM', 'JNJ']
+    symbols = ['SPY', 'GOOG', 'AAPL', 'IBM']
     
     # Get stock data
     df = get_data(symbols, dates)
