@@ -4,17 +4,16 @@ import matplotlib.pyplot as plt
 import requests
 import Historical_Data as hd
 
+
 def symbol_to_path(symbol, base_dir="data"):
     """Return CSV file path given ticker symbol.
     If CSV is not already downloaded, will download from yahoo finance """
     # print("Symbol to path, " + symbol)
 
-
     if os.path.exists(os.path.join(base_dir, "{}.csv".format(str(symbol)))) == False:
         hd.pull_specific_stocks([symbol])
-    
-    return os.path.join(base_dir, "{}.csv".format(str(symbol)))
 
+    return os.path.join(base_dir, "{}.csv".format(str(symbol)))
 
 
 def plot_selected(df, columns, start_index, end_index):
@@ -48,8 +47,7 @@ def get_data(symbols, dates):
                 df = df.dropna(subset=["SPDR S&P 500 ETF Trust"])
         except Exception as e:
             print("Error reading in {symbol} data, may not exist")
-            print(e) 
-            
+            print(e)
 
     return df
 
@@ -59,7 +57,7 @@ def test_run():
     dates = pd.date_range("2019-11-01", "2020-03-26")
 
     # Choose stock symbols to read
-    symbols = ["ZM",  "TSLA", "COST", "SPY", "UAL", "ZZXZ"]
+    symbols = ["ZM", "TSLA", "COST", "SPY", "UAL", "ZZXZ"]
     # Get stock data
     df = get_data(symbols, dates)
 

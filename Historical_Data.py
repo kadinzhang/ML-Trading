@@ -18,8 +18,8 @@ def pull_all_data():
             pull_historical_data(company)
             try:
                 filename = make_filename((company))
-                src = "C:/Users/sebal/Desktop/Coding/Python/ML-Trading"
-                dst = "C:/Users/sebal/Desktop/Coding/Python/ML-Trading/data"
+                src = os.getcwd()
+                dst = src + "/data"
                 shutil.move(os.path.join(src, filename), os.path.join(dst, filename))
             except:
                 print("Error moving file")
@@ -27,13 +27,15 @@ def pull_all_data():
 
 def pull_specific_stocks(stocks):
     """Download data of specific stocks from yahoo finance"""
-    print("Downloading historical data for: " + stocks[0])
     for stock in stocks:
+
+        print("Downloading historical data for: " + stock)
         pull_historical_data(stock)
+
         try:
             filename = make_filename((stock))
-            src = "C:/Users/sebal/Desktop/Coding/Python/ML-Trading"
-            dst = "C:/Users/sebal/Desktop/Coding/Python/ML-Trading/data"
+            src = os.getcwd()
+            dst = src + "/data"
             shutil.move(os.path.join(src, filename), os.path.join(dst, filename))
         except Exception as e:
             print("Error moving file")
@@ -75,5 +77,5 @@ def pull_historical_data(ticker_symbol):
 
 if __name__ == "__main__":
     # pull_all_data()
-    stocks = ["ZM", "TSLA", "PG", "SPY"]
+    stocks = ["ZM", "GOOG", "UAL"]
     pull_specific_stocks(stocks)
