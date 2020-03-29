@@ -10,7 +10,7 @@ import shutil
 
 
 def pull_all_data():
-    with open("../old_data/Lists/sp5002012.txt", "r") as file:
+    with open("old_data/Lists/sp5002012.txt", "r") as file:
         for line in file:
             company = line.strip()
             print(company)
