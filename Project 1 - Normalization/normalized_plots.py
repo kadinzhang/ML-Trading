@@ -1,16 +1,9 @@
 import pandas as pd
-import sys
-import os
-
-sys.path.append(os.getcwd())
-
-from util import get_data, plot_data
-
+from Utility.util import get_data, plot_data
 
 def normalize_data(df):
     df = df / df.iloc[0]
     return df
-
 
 def test_run():
     # Get data
@@ -26,7 +19,6 @@ def test_run():
         xlabel="Date",
         ylabel="Normalized Adjusted Close Price",
     )
-
 
 if __name__ == "__main__":
     test_run()
