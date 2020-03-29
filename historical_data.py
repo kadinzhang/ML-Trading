@@ -35,7 +35,7 @@ def pull_specific_stocks(stocks):
         try:
             filename = make_filename((stock))
             src = os.getcwd()
-            dst = src + "/data"
+            dst = src + "/../data"
             shutil.move(os.path.join(src, filename), os.path.join(dst, filename))
         except Exception as e:
             print("Error moving file")
@@ -50,7 +50,7 @@ current_time = str(math.floor(time.time()))
 
 
 def make_url(
-    ticker_symbol, period1="1546300800", period2=current_time, interval="1d",
+    ticker_symbol, period1="946684800", period2=current_time, interval="1d",
 ):
 
     return "https://query1.finance.yahoo.com/v7/finance/download/{}?period1={}&period2={}&interval={}&events=history".format(
