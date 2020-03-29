@@ -17,7 +17,7 @@ def pull_all_data():
             print("\n")
             pull_historical_data(company)
             try:
-                filename = make_filename((company))
+                filename = make_filename(company)
                 src = os.getcwd()
                 dst = src + "/data"
                 shutil.move(os.path.join(src, filename), os.path.join(dst, filename))

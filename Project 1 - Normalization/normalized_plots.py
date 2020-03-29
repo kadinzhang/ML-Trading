@@ -1,6 +1,7 @@
 import pandas as pd
 # from util import get_data, plot_data
 from util import get_data, plot_data
+
 def normalize_data(df):
     df = df / df.iloc[0]
     return df
