@@ -1,5 +1,5 @@
 import pandas as pd
-from util import get_data
+from util import get_old_data
 
 
 def portfolio_statistics(
@@ -12,7 +12,7 @@ def portfolio_statistics(
     sample_frequency,
 ):
     dates = pd.date_range(start_date, end_date)
-    prices = get_data(symbols, dates)
+    prices = get_old_data(symbols, dates)
 
     prices.fillna(method="ffill", inplace=True)
     prices.fillna(method="bfill", inplace=True)
