@@ -3,14 +3,13 @@ import time
 import math
 import os
 import shutil
-
-
+import util
 # period1 and period2 are Unix time stamps for your start and end date
 # interval is the data retrieval interval (this can be either 1d, 1w or 1m)
 
 
 def pull_all_data():
-    with open("old_data/Lists/sp5002012.txt", "r") as file:
+    with open("data/Lists/sp5002012.txt", "r") as file:
         for line in file:
             company = line.strip()
             print(company)
@@ -35,7 +34,7 @@ def pull_specific_stocks(stocks):
         try:
             filename = make_filename((stock))
             src = os.getcwd()
-            dst = src + "/../data"
+            dst = src + "/data"
             shutil.move(os.path.join(src, filename), os.path.join(dst, filename))
         except Exception as e:
             print("Error moving file")
@@ -76,6 +75,7 @@ def pull_historical_data(ticker_symbol):
 
 
 if __name__ == "__main__":
-    pull_all_data()
+    # pull_all_data()
     # stocks = ["ZM", "GOOG", "UAL"]
-    # pull_specific_stocks(stocks)
+    stocks = ["SPY"]
+    pull_specific_stocks(stocks)

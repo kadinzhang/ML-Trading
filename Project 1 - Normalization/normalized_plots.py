@@ -1,6 +1,9 @@
 import pandas as pd
-# from util import get_data, plot_data
-from util import get_data, plot_data
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.getcwd()))
+
+from util import *
 
 def normalize_data(df):
     df = df / df.iloc[0]
@@ -8,7 +11,7 @@ def normalize_data(df):
 
 def test_run():
     # Get data
-    dates = pd.date_range("2019-11-01", "2020-03-26")
+    dates = pd.date_range("2000-11-01", "2020-03-26")
     symbols = ["ZM", "TSLA", "COST", "SPY", "UAL", "AAPL", "GOOG"]
     df = get_data(symbols, dates)
 

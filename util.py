@@ -2,43 +2,29 @@ import pandas as pd
 from historical_data import *
 
 
-def symbol_to_path(symbol, base_dir="../data"):
+def symbol_to_path(symbol, base_dir=None):
     """Return CSV file path given ticker symbol.
     If CSV is not already downloaded, will download from yahoo finance """
+    if base_dir == None:
+        base_dir = os.path.dirname(os.getcwd())
+        base_dir = os.path.join(base_dir, "data")
 
     if not os.path.exists(os.path.join(base_dir, "{}.csv".format(str(symbol)))):
         pull_specific_stocks([symbol])
 
     return os.path.join(base_dir, "{}.csv".format(str(symbol)))
+    # if base_dir is None:
+    #     base_dir = os.environ.get("MARKET_DATA_DIR", "../data/")
+    #     print(base_dir)
+    # return os.path.join(base_dir, "{}.csv".format(str(symbol)))
 
 
 def symbol_to_old_path(symbol, base_dir=None):
     """Return CSV file path given ticker symbol."""
     if base_dir is None:
         base_dir = os.environ.get("MARKET_DATA_DIR", "../old_data/")
+    print(base_dir)
     return os.path.join(base_dir, "{}.csv".format(str(symbol)))
-
-
-def get_old_data(symbols, dates, addSPY=True, colname="Adj Close"):
-    """Read stock data (adjusted close) for given symbols from CSV files."""
-    df = pd.DataFrame(index=dates)
-    if addSPY and "SPY" not in symbols:  # add SPY for reference, if absent
-        symbols = ["SPY"] + symbols
-
-    for symbol in symbols:
-        df_temp = pd.read_csv(
-            symbol_to_old_path(symbol),
-            index_col="Date",
-            parse_dates=True,
-            usecols=["Date", colname],
-            na_values=["nan"],
-        )
-        df_temp = df_temp.rename(columns={colname: symbol})
-        df = df.join(df_temp)
-        if symbol == "SPY":  # drop dates SPY did not trade
-            df = df.dropna(subset=["SPY"])
-
-    return df
 
 
 def get_data(symbols, dates, addSPY=True, colname="Adj Close"):
@@ -59,6 +45,7 @@ def get_data(symbols, dates, addSPY=True, colname="Adj Close"):
         )
         df_temp = df_temp.rename(columns={colname: symbol})
         df = df.join(df_temp)
+
         if symbol == "SPY":  # drop dates SPY did not trade
             df = df.dropna(subset=["SPY"])
 

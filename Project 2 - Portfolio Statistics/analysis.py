@@ -1,6 +1,8 @@
 import pandas as pd
-from util import get_data
-
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.getcwd()))
+from util import *
 
 def portfolio_statistics(
     start_date,
@@ -14,10 +16,10 @@ def portfolio_statistics(
     # Get and fill data
     dates = pd.date_range(start_date, end_date)
     prices = get_data(symbols, dates)
+    print (prices)
     prices.fillna(method="ffill", inplace=True)
     prices.fillna(method="bfill", inplace=True)
     prices = prices[symbols]
-    print(prices)
 
     # Calculate portfolio values
     normed = prices / prices.values[0]
@@ -41,7 +43,7 @@ if __name__ == "__main__":
     cumulative_return, average_daily_return, risk, sharpe_ratio = portfolio_statistics(
         "2010-01-22",
         "2010-02-22",
-        ["GOOG", "AAPL", "GLD", "XOM"],
+        ["GOOG", "AAPL", "GLD", "TSLA"],
         [0.3, 0.3, 0.2, 0.2],
         100000,
         0,
