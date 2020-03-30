@@ -1,22 +1,24 @@
-import pandas as pd
-import sys
 import os
+import sys
+
 sys.path.insert(0, os.path.dirname(os.getcwd()))
+
 from util import *
 
+
 def portfolio_statistics(
-    start_date,
-    end_date,
-    symbols,
-    allocations,
-    start_value,
-    risk_free_rate,
-    sample_frequency,
+        start_date,
+        end_date,
+        symbols,
+        allocations,
+        start_value,
+        risk_free_rate,
+        sample_frequency,
 ):
     # Get and fill data
     dates = pd.date_range(start_date, end_date)
     prices = get_data(symbols, dates)
-    print (prices)
+    print(prices)
     prices.fillna(method="ffill", inplace=True)
     prices.fillna(method="bfill", inplace=True)
     prices = prices[symbols]
@@ -25,7 +27,7 @@ def portfolio_statistics(
     normed = prices / prices.values[0]
     alloced = normed * allocations
     pos_values = alloced * start_value
-    port_vals = pos_values.sum(axis = 1)
+    port_vals = pos_values.sum(axis=1)
 
     # Calculate daily returns
     daily_rets = (port_vals[1:] / port_vals.values[:-1]) - 1

@@ -1,9 +1,10 @@
-import urllib.request
-import time
 import math
 import os
 import shutil
-import util
+import time
+import urllib.request
+
+
 # period1 and period2 are Unix time stamps for your start and end date
 # interval is the data retrieval interval (this can be either 1d, 1w or 1m)
 
@@ -43,15 +44,15 @@ def pull_specific_stocks(stocks):
 
 current_time = str(math.floor(time.time()))
 
+
 # Times:
 # 2019-01-01 : 1546300800
 # 2000-01-01 : 946684800
 
 
 def make_url(
-    ticker_symbol, period1="946684800", period2=current_time, interval="1d",
+        ticker_symbol, period1="946684800", period2=current_time, interval="1d",
 ):
-
     return "https://query1.finance.yahoo.com/v7/finance/download/{}?period1={}&period2={}&interval={}&events=history".format(
         ticker_symbol, period1, period2, interval
     )

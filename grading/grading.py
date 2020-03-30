@@ -3,12 +3,14 @@
 Note: Writes results to "comments.txt" in current working directory.  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
 """
 
-import pytest
+import multiprocessing
 import signal
+import sys
+import traceback
 from collections import namedtuple
 from contextlib import contextmanager
-import multiprocessing
-import sys, traceback
+
+import pytest
 
 timeout_manager = multiprocessing.Manager()
 

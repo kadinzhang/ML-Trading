@@ -1,13 +1,15 @@
-import pandas as pd
-import sys
 import os
+import sys
+
 sys.path.insert(0, os.path.dirname(os.getcwd()))
 
 from util import *
 
+
 def normalize_data(df):
     df = df / df.iloc[0]
     return df
+
 
 def test_run():
     # Get data
@@ -23,6 +25,7 @@ def test_run():
         xlabel="Date",
         ylabel="Normalized Adjusted Close Price",
     )
+
 
 if __name__ == "__main__":
     test_run()
