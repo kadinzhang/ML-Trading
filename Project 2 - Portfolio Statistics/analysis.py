@@ -1,9 +1,8 @@
 import os
 import sys
-
+import pandas as pd
+from util import get_data
 sys.path.insert(0, os.path.dirname(os.getcwd()))
-
-from util import *
 
 
 def portfolio_statistics(
@@ -13,12 +12,10 @@ def portfolio_statistics(
         allocations,
         start_value,
         risk_free_rate,
-        sample_frequency,
 ):
     # Get and fill data
     dates = pd.date_range(start_date, end_date)
     prices = get_data(symbols, dates)
-    print(prices)
     prices.fillna(method="ffill", inplace=True)
     prices.fillna(method="bfill", inplace=True)
     prices = prices[symbols]
@@ -49,7 +46,6 @@ if __name__ == "__main__":
         [0.3, 0.3, 0.2, 0.2],
         100000,
         0,
-        252,
     )
 
     print("Cumulative return: ", cumulative_return)
