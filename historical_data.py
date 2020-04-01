@@ -77,6 +77,5 @@ def pull_historical_data(ticker_symbol):
 
 if __name__ == "__main__":
     # pull_all_data()
-    # stocks = ["ZM", "GOOG", "UAL"]
-    stocks = ["SPY"]
+    stocks = ['GOOG', 'AAPL', 'GLD', 'ZM', 'COST', 'UAL']
     pull_specific_stocks(stocks)

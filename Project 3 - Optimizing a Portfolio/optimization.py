@@ -12,7 +12,8 @@ def f(normed, allocs, sv):
     daily_rets = (port_val[1:]/port_val.values[:-1]) - 1
     risk = daily_rets.std()
     cr = -(port_val[-1] / port_val.values[0]) - 1
-    return cr
+    sr = (daily_rets - 0.0).mean() / risk
+    return risk
 
 
 
@@ -52,16 +53,15 @@ def optimize_portfolio(sd=dt.datetime(2008, 1, 1), ed=dt.datetime(2009, 1, 1), s
         prices_SPY = prices_SPY / prices_SPY.values[0]
         port_val = port_val / port_val.values[0]
         df_temp = pd.concat([port_val, prices_SPY], keys=['Portfolio', 'SPY'], axis=1)
-        plot_data(df_temp, title="Return-optimized portfolio and SPY performance")
-        pass
+        plot_data(df_temp, title="Risk-optimized portfolio and SPY performance")
 
     return allocs, cr, adr, sddr, sr
 
 
 def test_code():
-    start_date = dt.datetime(2009, 1, 1)
-    end_date = dt.datetime(2010, 1, 1)
-    symbols = ['GOOG', 'AAPL', 'GLD', 'XOM', 'IBM']
+    start_date = dt.datetime(2020, 1, 1)
+    end_date = dt.datetime(2020, 3, 30)
+    symbols = ['GOOG', 'AAPL', 'GLD', 'ZM', 'COST', 'UAL']
 
     # Assess the portfolio  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
     allocations, cr, adr, sddr, sr = optimize_portfolio(sd=start_date, ed=end_date, \
