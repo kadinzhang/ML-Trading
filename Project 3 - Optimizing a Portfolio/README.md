@@ -5,7 +5,7 @@ A function that returns optimized portfolio allocations over a certain time peri
 - Risk
 - Sharpe ratio
 
-###Results
+### Results
 
 The function was tested for each criteria over the time period 1/1/2020 to 3/30/2020 with a portfolio of `GOOG, AAPL, GLD, ZM, COST, UAL` (allocations follow respectively).
 
