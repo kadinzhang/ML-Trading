@@ -1,29 +1,26 @@
-import os
-import sys
 import pandas as pd
 from util import get_data
-sys.path.insert(0, os.path.dirname(os.getcwd()))
 
 
 def portfolio_statistics(
-        start_date,
-        end_date,
-        symbols,
-        allocations,
-        start_value,
-        risk_free_rate,
+        sd,
+        ed,
+        syms,
+        allocs,
+        sv,
+        rfr,
 ):
     # Get and fill data
-    dates = pd.date_range(start_date, end_date)
-    prices = get_data(symbols, dates)
+    dates = pd.date_range(sd, ed)
+    prices = get_data(syms, dates)
     prices.fillna(method="ffill", inplace=True)
     prices.fillna(method="bfill", inplace=True)
-    prices = prices[symbols]
+    prices = prices[syms]
 
     # Calculate portfolio values
     normed = prices / prices.values[0]
-    alloced = normed * allocations
-    pos_values = alloced * start_value
+    alloced = normed * allocs
+    pos_values = alloced * sv
     port_vals = pos_values.sum(axis=1)
 
     # Calculate daily returns
@@ -33,7 +30,7 @@ def portfolio_statistics(
     cumulative_return = (port_vals[-1] / port_vals[0]) - 1
     average_daily_return = daily_rets.mean()
     risk = daily_rets.std()
-    sharpe_ratio = (daily_rets - risk_free_rate).mean() / risk
+    sharpe_ratio = (daily_rets - rfr).mean() / risk
 
     return cumulative_return, average_daily_return, risk, sharpe_ratio
 

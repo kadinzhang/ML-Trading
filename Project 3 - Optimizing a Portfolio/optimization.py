@@ -4,6 +4,7 @@ import numpy as np
 import datetime as dt
 from util import get_data, plot_data
 
+
 def f(normed, allocs, sv):
     # Function to be minimized
     alloced = normed * allocs
@@ -11,13 +12,15 @@ def f(normed, allocs, sv):
     port_val = pos_val.sum(axis = 1)
     daily_rets = (port_val[1:]/port_val.values[:-1]) - 1
     risk = daily_rets.std()
-    cr = -(port_val[-1] / port_val.values[0]) - 1
-    sr = (daily_rets - 0.0).mean() / risk
+    cumulative_return = -(port_val[-1] / port_val.values[0]) - 1
+    sharpe_ratio = (daily_rets - 0.0).mean() / risk
+
+    # Return desired criteria
     return risk
 
 
-
 def optimize_portfolio(sd=dt.datetime(2008, 1, 1), ed=dt.datetime(2009, 1, 1), syms=['GOOG', 'AAPL', 'GLD', 'XOM'], gen_plot=False):
+    # Starting value and risk-free rate
     sv = 1000000
     rfr = 0.0
 
@@ -43,10 +46,10 @@ def optimize_portfolio(sd=dt.datetime(2008, 1, 1), ed=dt.datetime(2009, 1, 1), s
     pos_val = alloced * sv
     port_val = pos_val.sum(axis=1)
     daily_rets = (port_val[1:] / port_val.values[:-1]) - 1
-    cr = (port_val[-1] / port_val.values[0]) - 1
-    adr = daily_rets.mean()
-    sddr = daily_rets.std()
-    sr = (daily_rets - rfr).mean() / sddr
+    cum_ret = (port_val[-1] / port_val.values[0]) - 1
+    avg_daily_ret = daily_rets.mean()
+    risk = daily_rets.std()
+    sharpe_ratio = (daily_rets - rfr).mean() / risk
 
     # Compare daily portfolio value with SPY using a normalized plot  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
     if gen_plot:
@@ -55,7 +58,7 @@ def optimize_portfolio(sd=dt.datetime(2008, 1, 1), ed=dt.datetime(2009, 1, 1), s
         df_temp = pd.concat([port_val, prices_SPY], keys=['Portfolio', 'SPY'], axis=1)
         plot_data(df_temp, title="Risk-optimized portfolio and SPY performance")
 
-    return allocs, cr, adr, sddr, sr
+    return allocs, cum_ret, avg_daily_ret, risk, sharpe_ratio
 
 
 def test_code():
