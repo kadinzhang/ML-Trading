@@ -27,7 +27,8 @@ def optimize_portfolio(sd=dt.datetime(2008, 1, 1), ed=dt.datetime(2009, 1, 1), s
     # Read in adjusted closing prices for given symbols, date range
     dates = pd.date_range(sd, ed)
     prices_all = get_data(syms, dates)
-    prices = prices_all[syms]
+    prices = prices_all.copy()
+    prices = prices[syms]
     prices.fillna(method='ffill', inplace=True)
     prices.fillna(method='bfill', inplace=True)
     prices_SPY = prices_all['SPY']
@@ -35,7 +36,7 @@ def optimize_portfolio(sd=dt.datetime(2008, 1, 1), ed=dt.datetime(2009, 1, 1), s
     # Find allocations with optimization
     n = len(syms)
     normed = prices / prices.values[0]
-    guess = [1.0/n] * n
+    guess = [1.0 / n] * n
     bounds = [(0.0, 1.0) for i in normed.columns]
     constraints = ({'type': 'eq', 'fun': lambda inputs: 1.0 - np.sum(inputs)})
     minimize_result = spo.minimize(f, guess, args=(normed, sv), method='SLSQP', constraints=constraints, bounds=bounds, options={'disp': True})
