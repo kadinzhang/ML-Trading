@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class DTLearner(object):
+class RTLearner(object):
 
     def __init__(self, leaf_size=1, verbose=False):
         self.leaf_size = leaf_size
@@ -10,7 +10,7 @@ class DTLearner(object):
 
     def train(self, dataX, dataY):
         """
-        Train decision tree learner with input and output data
+        Train random tree learner with input and output data
 
         Args:
             dataX: Input data
@@ -23,13 +23,13 @@ class DTLearner(object):
         self.model = self.build_tree(data)
 
     def build_tree(self, data):
-        """Build a decision tree following JR Quinlan's recursive algorithm.
+        """Build a random tree model with Cutler's algorithm
 
         Args:
             data: concatenated X/Y data
 
         Returns:
-            Decision tree model in NumPy array format:
+            Random tree model in NumPy array format:
                 Node: [Feature index, split value, left tree, right tree]
                 Leaf: ["Leaf", estimate, "NA", "NA"]
         """
@@ -43,7 +43,9 @@ class DTLearner(object):
 
         # Find feature to split on and split data between left and right trees
         feature_index = self.find_feature(data)
-        split_value = np.median(data[:, feature_index])
+        r1 = np.random.randint(data.shape[0])
+        r2 = np.random.randint(data.shape[0])
+        split_value = (data[r1, feature_index] + data[r2, feature_index]) / 2
         left_tree_data = data[data[:, feature_index] <= split_value]
         right_tree_data = data[data[:, feature_index] > split_value]
 
@@ -60,13 +62,8 @@ class DTLearner(object):
 
     def find_feature(self, data):
         # Return index of feature with highest absolute correlation to outputs
-        max_correlation = 0
-        index = 0
-        for i in range(data.shape[1] - 1):
-            correlation = np.correlate(data[:, i], data[:, -1])
-            if abs(correlation) > max_correlation:
-                max_correlation = correlation
-                index = i
+        features = data.shape[1] - 1
+        index = np.random.randint(features)
         return index
 
     def query(self, points):

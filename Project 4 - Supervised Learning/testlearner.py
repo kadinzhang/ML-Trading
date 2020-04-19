@@ -2,6 +2,7 @@ import numpy as np
 import math
 import LinRegLearner as lrl
 import DTLearner as dtl
+import RTLearner as rtl
 import sys
 
 if __name__ == "__main__":
@@ -27,7 +28,8 @@ if __name__ == "__main__":
     # create a learner and train it  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
     # learner = lrl.LinRegLearner(
     #     verbose=True)
-    learner = dtl.DTLearner()
+    learner = rtl.RTLearner()
+    # learner = dtl.DTLearner()
     learner.train(trainX, trainY)  # train it
 
     # # evaluate in sample
