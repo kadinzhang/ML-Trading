@@ -4,14 +4,15 @@ import numpy as np
 class LinRegLearner(object):
 
     def __init__(self, verbose=False):
-        pass  # move along, these aren't the drones you're looking for
+        pass
 
+    def train(self, dataX, dataY):
+        """
+        Train learner with X/Y data
 
-    def addEvidence(self, dataX, dataY):
-        """  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
-        @summary: Add training data to learner  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
-        @param dataX: X values of data to add  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
-        @param dataY: the Y training values  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
+        Args:
+            dataX: training input data
+            dataY: training output data
         """
 
         # slap on 1s column so linear regression finds a constant term  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
