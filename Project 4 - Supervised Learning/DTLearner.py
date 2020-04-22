@@ -4,22 +4,18 @@ import numpy as np
 class DTLearner(object):
 
     def __init__(self, leaf_size=1, verbose=False):
+        """Initialize a decision tree learner
+
+        Args:
+            leaf_size: Maximum number of samples to combine into a leaf
+        """
         self.leaf_size = leaf_size
         self.verbose = verbose
         self.model = []
 
     def train(self, dataX, dataY):
-        """
-        Train decision tree learner with input and output data
-
-        Args:
-            dataX: Input data
-            dataY: Output data
-        """
-
         dataY = dataY[:, None]
         data = np.concatenate((dataX, dataY), axis=1)
-
         self.model = self.build_tree(data)
 
     def build_tree(self, data):
@@ -95,7 +91,8 @@ class DTLearner(object):
                 split_value = root[1]
 
             Y.append(root[1])
-        return np.array(Y, dtype=float)
+        Y = np.array(Y, dtype=float)
+        return Y
 
 
 

@@ -3,15 +3,18 @@ import math
 import LinRegLearner as lrl
 import DTLearner as dtl
 import RTLearner as rtl
+import BagLearner as bl
 import sys
 
 if __name__ == "__main__":
-    # Open and convert .csv
     inf = open('./Data/Istanbul.csv')
+    # inf = open('./Data/winequality-red.csv')
     data = np.genfromtxt(inf, delimiter=',')
-    # For Istanbul.csv
+
+    # Istanbul
     data = data[1:, 1:]
-    # data = data[:10, :]
+    data = data[:10, :]
+
     # Compute rows allocated to training and testing
     train_rows = int(0.6 * data.shape[0])
 
@@ -21,21 +24,22 @@ if __name__ == "__main__":
     trainY = data[:train_rows, -1]
     testX = data[train_rows:, 0:-1]
     testY = data[train_rows:, -1]
-    #
+
     # print(f"{testX.shape}")
     # print(f"{testY.shape}")
 
-    # create a learner and train it  		  	   		     			  		 			     			  	  		 	  	 		 			  		  			
+    # ____________________Learners______________________
     # learner = lrl.LinRegLearner(
     #     verbose=True)
-    learner = rtl.RTLearner()
+    # learner = rtl.RTLearner()
+    learner = bl.BagLearner(learner=dtl.DTLearner, kwargs={"leaf_size": 1}, bags=10, boost=False, verbose=False)
     # learner = dtl.DTLearner()
     learner.train(trainX, trainY)  # train it
 
-    # # evaluate in sample
     predY = learner.query(trainX)
-    predY = predY[:, None]
-    trainY = trainY[:, None]
+    # predY = predY[:, None]
+    # trainY = trainY[:, None]
+
 
     # Calculate statistics
     rmse = math.sqrt(((trainY - predY) ** 2).sum() / trainY.shape[0])
@@ -46,6 +50,9 @@ if __name__ == "__main__":
 
     # evaluate out of sample
     predY = learner.query(testX)
+    # predY.round(decimals=3)
+    np.set_printoptions(precision=2)
+
     rmse = math.sqrt(((testY - predY) ** 2).sum() / testY.shape[0])
     print()
     print("Out of sample results")
